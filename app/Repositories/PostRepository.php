@@ -69,8 +69,8 @@ class PostRepository
 
     public function restorePost($id)
     {
-
         $post = Post::onlyTrashed()->findOrFail($id);
+        $post->restore();
         return Post::find($id);
     }
 }
