@@ -84,8 +84,8 @@ class PostController extends Controller
     public function restore($id): JsonResponse
     {
         try {
-            $this->postService->restorePost($id);
-            return ApiResponseHelper::success([], 'Post restored successfully.');
+             $post =  $this->postService->restorePost($id);
+            return ApiResponseHelper::success([$post], 'Post restored successfully.');
         } catch (Exception $e) {
             return ApiResponseHelper::error('Failed to restore post.', 500, ['error' => $e->getMessage()]);
         }

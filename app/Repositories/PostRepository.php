@@ -25,8 +25,6 @@ class PostRepository
             // Store the image and get the path
             $coverImagePath = $data['cover_image']->store('cover_images', 'public');
         }
-
-        // Create the post with the image path
         $post = Post::create([
             'user_id' => Auth::id(),
             'title' => $data['title'],
@@ -35,7 +33,6 @@ class PostRepository
             'pinned' => $data['pinned'],
         ]);
 
-        // Attach tags if provided
         if (isset($data['tags'])) {
             $post->tags()->attach($data['tags']);
         }
@@ -53,7 +50,6 @@ class PostRepository
     {
         $post->update($data);
 
-        // Update tags if provided
         if (isset($data['tags'])) {
             $post->tags()->sync($data['tags']);
         }
@@ -73,7 +69,8 @@ class PostRepository
 
     public function restorePost($id)
     {
+
         $post = Post::onlyTrashed()->findOrFail($id);
-        return $post->restore();
+        return Post::find($id);
     }
 }
